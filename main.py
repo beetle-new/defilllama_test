@@ -42,8 +42,7 @@ if response.status_code == 200:
         data_table = data[['CHAIN', f'{title.upper()}_CHANGE']]
         return chart, data_table
     
-    # Create the daily change chart and data table
-    daily_chart, daily_data = create_chart_with_data(data, 'daily')
+
     
     # Create the weekly change chart and data table
     weekly_chart, weekly_data = create_chart_with_data(data, 'weekly')
@@ -60,8 +59,7 @@ st.write("")
 st.write("")
 
 # Find the most negative and positive changes for each timeframe and the associated chain
-daily_min = daily_data.loc[daily_data['DAILY_CHANGE'].idxmin()]
-daily_max = daily_data.loc[daily_data['DAILY_CHANGE'].idxmax()]
+
 weekly_min = weekly_data.loc[weekly_data['WEEKLY_CHANGE'].idxmin()]
 weekly_max = weekly_data.loc[weekly_data['WEEKLY_CHANGE'].idxmax()]
 monthly_min = monthly_data.loc[monthly_data['MONTHLY_CHANGE'].idxmin()]
@@ -69,16 +67,9 @@ monthly_max = monthly_data.loc[monthly_data['MONTHLY_CHANGE'].idxmax()]
 
 
 # Display the changes with the most negative and positive values for each timeframe
-st.metric("Daily Change", f"{daily_min['CHAIN']}: {daily_min['DAILY_CHANGE']:,.2f} (Most Negative) | {daily_max['CHAIN']}: {daily_max['DAILY_CHANGE']:,.2f} (Most Positive)")
 st.metric("Weekly Change", f"{weekly_min['CHAIN']}: {weekly_min['WEEKLY_CHANGE']:,.2f} (Most Negative) | {weekly_max['CHAIN']}: {weekly_max['WEEKLY_CHANGE']:,.2f} (Most Positive)")
 st.metric("Monthly Change", f"{monthly_min['CHAIN']}: {monthly_min['MONTHLY_CHANGE']:,.2f} (Most Negative) | {monthly_max['CHAIN']}: {monthly_max['MONTHLY_CHANGE']:,.2f} (Most Positive)")
 
-
-tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
-tab1.subheader("Daily Change")
-tab1.altair_chart(daily_chart)
-tab2.subheader("Daily Change Data")
-tab2.write(daily_data)
 
 tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
 tab1.subheader("Weekly Change")
@@ -92,6 +83,3 @@ tab1.subheader("Monthly Change")
 tab1.altair_chart(monthly_chart)
 tab2.subheader("Monthly Change Data")
 tab2.write(monthly_data)
-
-
-
